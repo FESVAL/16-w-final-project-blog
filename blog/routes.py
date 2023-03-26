@@ -1,12 +1,13 @@
 from flask import render_template, request
 from faker import Faker
-#from blog import app
-from . import app   
+from blog import app
+#from . import app   
 
+#from .models import Entry
+#from . import db
+#from .forms import EntryForm
 from blog.models import Entry, db
 from blog.forms import EntryForm
-#from blog import Entry, db
-#from blog import EntryForm
 
 
 #def generate_entries(how_many=10):
@@ -44,5 +45,16 @@ def create_entry():
            errors = form.errors
    return render_template("entry_form.html", form=form, errors=errors)
 
-
+@app.route("/edit-post/<int:entry_id>", methods=["GET", "POST"])
+def edit_entry(entry_id):
+   entry = Entry.query.filter_by(id=entry_id).first_or_404()
+   form = EntryForm(obj=entry)
+   errors = None
+   if request.method == 'POST':
+       if form.validate_on_submit():
+           form.populate_obj(entry)
+           db.session.commit()
+       else:
+           errors = form.errors
+   return render_template("entry_form.html", form=form, errors=errors)
 

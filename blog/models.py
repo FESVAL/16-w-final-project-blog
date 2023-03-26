@@ -1,4 +1,4 @@
-from . import db
+from .__init__ import db
 import datetime
 
 class Entry(db.Model):
@@ -11,3 +11,4 @@ class Entry(db.Model):
 
    def __str__(self):
        return f"<Entry {self.id} {self.title} {self.body} >"
+   
