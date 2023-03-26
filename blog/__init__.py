@@ -9,7 +9,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 from . import models
-#from . import routes
+from . import routes
 
 #from blog import routes, models
 
@@ -21,3 +21,5 @@ def make_shell_context():
         "db": db,
         "Entry": models.Entry
     }
+
+
